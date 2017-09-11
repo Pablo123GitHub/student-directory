@@ -60,8 +60,10 @@ def print(students)
   index = 0
   while countStudent >0          
        newIndex = "#{index}".to_i
-    puts "#{index+1}. #{students[newIndex][:name]} (#{students[newIndex][:cohort]} cohort)"   
-    puts "Hobbies : #{students[newIndex][:hobbies]}, height: #{students[newIndex][:height]}, from #{students[newIndex][:country]} "    
+    puts "#{index+1}. #{students[newIndex][:name]}".center(50)
+    puts "(#{students[newIndex][:cohort]} cohort)".center(60)  
+    puts "Hobbies : #{students[newIndex][:hobbies]}, height: #{students[newIndex][:height]}, from #{students[newIndex][:country]} ".center(60)    
+    puts " -----------------------------------------------------------"
       countStudent = countStudent - 1 
       index = index + 1       
   end 
