@@ -6,15 +6,19 @@ def input_students
   students = []
   # get the first name
   name = gets.chomp
-  # while the name is not empty, repeat this code    
   
+  # while the name is not empty, repeat this code      
 while !name.empty?    
-
-  
+  # Prompting the user to enter a cohort 
     puts "For which cohort would you like to add more students?"
     cohort = gets.chomp 
-
+# Checking if cohort is a valid month 
     while (cohort.downcase.match(/(jan(uary)?|feb(ruary)?|mar(ch)?|apr(il)?|may|jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)/)) == nil do
+    # exiting loop if cohort is empty 
+      puts "The default cohort will be November " if cohort.empty?
+      break                                       if cohort.empty?
+    
+    # If the user provides a cohort which is not a valid month, then we prompt the user to enter a cohort again
       puts "Your response was #{cohort}"
       puts "It seems that there is a typo. Make sure that the month begins with a capital letter. "
       puts "Feel free to abbreviate if need be. Example : Aug or August"
@@ -23,49 +27,51 @@ while !name.empty?
       cohort = gets.chomp  
     end
 
+# We exit the above loop when cohort is empty or when cohort has a valid month
     cohort = cohort.capitalize.to_sym
-    cohort = :November if cohort.empty?   
+    cohort = :November if cohort.empty?   # Turning cohort into a symbol 
     
     # add the student hash to the array
     students << {name: name, cohort: cohort, hobbies: :coding, country: :UK, height: 1.75} 
     puts "Now we have #{students.count} students"
-    # get another name from the user
-  
-    puts "Please enter another student name "     if students.length != 0
-    puts "To finish, just hit return twice"       if students.length != 0
+    
+    # get another name from the user  
+    puts "Please enter another student name "     
+    puts "To finish, just hit return twice"       
     
     name = gets.chomp
   
   end
 
-
-  
   # Asking if they want to filter the names by the first letter 
   puts "Do you want to see the students with a name that starts with a specific letter?"
   puts "Please respond Yes or No."
   user_response = gets.chomp
   
+  # checking the response provided by the user : must be yes or no. Anything else is not valid 
   while (user_response.downcase.match(/^[yes|no]+$/)) == nil do
     puts "Your response was #{user_response}"
     puts "Please answer Yes or No. No other response is accepted"    
     user_response = gets.chomp  
   end
   
-    # if user says "no" then we display students array 
-    # if user says "yes" then we need to ask for the letter 
-    
+    # if user says "no" then we display students array: only students with less than 12 characters 
 return students.reject{ |x| x[:name].length > 12} if user_response.downcase == "no"
     
+  # if user says "yes" then we need to ask for the letter 
  puts "Which letter?" if user_response.downcase == "yes" 
 
 letter = gets.chomp
 
+# check whether the letter is a valid alphabet letter...nothing else 
+# Also we need to check if the input is only ONE letter 
 while (letter.length != 1 || letter[/[a-z]|[A-Z]/] == nil) do 
   puts "Only ONE letter of the ALPHABET is accepted "
   puts "No other character is allowed "
   letter = gets.chomp 
 end
 
+# dipslay only students with the correct first letter + reject students with name > 12 characters
  students.select{ |x| x[:name][0].downcase == letter.downcase }
  .reject{ |x| x[:name].length > 12}
 
