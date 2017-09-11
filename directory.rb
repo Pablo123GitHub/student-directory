@@ -1,36 +1,44 @@
 def input_students
-  puts "For which cohort would you like to add more students?"
-  cohort = gets.chomp 
-  
-  while (cohort.downcase.match(/(jan(uary)?|feb(ruary)?|mar(ch)?|Apr(il)?|may|Jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)/)) == nil do
-    puts "Your response was #{cohort}"
-    puts "It seems that there is a typo. Make sure that the month begins with a capital letter. "
-    puts "Feel free to abbreviate if need be. Example : Aug or August"
-    puts "--------------------"
-    puts "Please type cohort again"    
-    cohort = gets.chomp  
-  end
-  
-  cohort = cohort.capitalize.to_sym
-  
-  cohort = :November if cohort.empty?     
-    
+
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
   # get the first name
   name = gets.chomp
-  # while the name is not empty, repeat this code
-  while !name.empty? do
+  # while the name is not empty, repeat this code    
+  
+while !name.empty?    
+
+  
+    puts "For which cohort would you like to add more students?"
+    cohort = gets.chomp 
+
+    while (cohort.downcase.match(/(jan(uary)?|feb(ruary)?|mar(ch)?|apr(il)?|may|jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)/)) == nil do
+      puts "Your response was #{cohort}"
+      puts "It seems that there is a typo. Make sure that the month begins with a capital letter. "
+      puts "Feel free to abbreviate if need be. Example : Aug or August"
+      puts "--------------------"
+      puts "Please type cohort again"    
+      cohort = gets.chomp  
+    end
+
+    cohort = cohort.capitalize.to_sym
+    cohort = :November if cohort.empty?   
+    
     # add the student hash to the array
     students << {name: name, cohort: cohort, hobbies: :coding, country: :UK, height: 1.75} 
     puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chomp
-  end
-    
   
+    puts "Please enter another student name "     if students.length != 0
+    puts "To finish, just hit return twice"       if students.length != 0
+    
+    name = gets.chomp
+  
+  end
+
+
   
   # Asking if they want to filter the names by the first letter 
   puts "Do you want to see the students with a name that starts with a specific letter?"
