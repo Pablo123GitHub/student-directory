@@ -1,8 +1,19 @@
 def input_students
   puts "For which cohort would you like to add more students?"
-    cohort = gets.chomp
-  cohort = "November" if cohort.empty? 
-    
+  cohort = gets.chomp 
+  
+  while (cohort.downcase.match(/(jan(uary)?|feb(ruary)?|mar(ch)?|Apr(il)?|may|Jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)/)) == nil do
+    puts "Your response was #{cohort}"
+    puts "It seems that there is a typo. Make sure that the month begins with a capital letter. "
+    puts "Feel free to abbreviate if need be. Example : Aug or August"
+    puts "--------------------"
+    puts "Please type cohort again"    
+    cohort = gets.chomp  
+  end
+  
+  cohort = cohort.capitalize.to_sym
+  
+  cohort = :November if cohort.empty?     
     
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -18,9 +29,7 @@ def input_students
     # get another name from the user
     name = gets.chomp
   end
-  
-
-  
+    
   
   
   # Asking if they want to filter the names by the first letter 
@@ -72,7 +81,7 @@ def print(students)
        newIndex = "#{index}".to_i
     puts "#{index+1}. #{students[newIndex][:name]}".center(50)
     puts "(#{students[newIndex][:cohort]} cohort)".center(60)  
-    puts "Hobbies : #{students[newIndex][:hobbies]}, height: #{students[newIndex][:height]}, from #{students[newIndex][:country]} ".center(60)    
+    puts "Hobbies : #{students[newIndex][:hobbies]}, Height: #{students[newIndex][:height]}, from #{students[newIndex][:country]} ".center(60)    
     puts " -----------------------------------------------------------"
       countStudent = countStudent - 1 
       index = index + 1       
