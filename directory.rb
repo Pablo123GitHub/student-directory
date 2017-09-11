@@ -21,8 +21,7 @@ def input_students
   while (user_response.downcase.match(/^[yes|no]+$/)) == nil do
     puts "Your response was #{user_response}"
     puts "Please answer Yes or No. No other response is accepted"    
-    puts user_response.downcase.chomp =~ /yes\b|no/ 
-  user_response = gets.chomp  
+    user_response = gets.chomp  
   end
   
     # if user says "no" then we display students array 
