@@ -89,17 +89,37 @@ def print(students)
   # students.each_with_index do |student, index|    
   #   puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
   # end
-  countStudent = students.length   
-  index = 0
-  while countStudent >0          
-       newIndex = "#{index}".to_i
-    puts "#{index+1}. #{students[newIndex][:name]}".center(50)
-    puts "(#{students[newIndex][:cohort]} cohort)".center(60)  
-    puts "Hobbies : #{students[newIndex][:hobbies]}, Height: #{students[newIndex][:height]}, from #{students[newIndex][:country]} ".center(60)    
-    puts " -----------------------------------------------------------"
-      countStudent = countStudent - 1 
-      index = index + 1       
-  end 
+  
+  # countStudent = students.length   
+  # index = 0
+  # while countStudent >0          
+  #      newIndex = "#{index}".to_i
+  #   puts "#{index+1}. #{students[newIndex][:name]}".center(50)
+  #   puts "(#{students[newIndex][:cohort]} cohort)".center(60)  
+  #   puts "Hobbies : #{students[newIndex][:hobbies]}, Height: #{students[newIndex][:height]}, from #{students[newIndex][:country]} ".center(60)    
+  #   puts " -----------------------------------------------------------"
+  #     countStudent = countStudent - 1 
+  #     index = index + 1       
+  # end 
+  
+  newArr = students.group_by {|x| x[:cohort]}
+  newArr.each do |cohort, arr|
+    countStudent = arr.length   
+    index = 0 
+    puts "**************************"   
+    puts "Here is the cohort for #{cohort.upcase} "
+    puts "**************************"
+    while countStudent >0                
+         newIndex = "#{index}".to_i
+      puts "#{index+1}. #{arr[newIndex][:name]}".center(50)
+      puts "(#{arr[newIndex][:cohort]} cohort)".center(60)  
+      puts "Hobbies : #{arr[newIndex][:hobbies]}, Height: #{arr[newIndex][:height]}, from #{arr[newIndex][:country]} ".center(60)    
+      puts " -----------------------------------------------------------"
+        countStudent = countStudent - 1 
+        index = index + 1       
+    end 
+  end
+  
 end 
 
 
