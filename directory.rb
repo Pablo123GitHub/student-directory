@@ -13,9 +13,37 @@ def input_students
     # get another name from the user
     name = gets.chomp
   end
-  # return the array of students
-  students
+  # Asking if they want to filter the names by the first letter 
+  puts "Do you want to see the students with a name that starts with a specific letter?"
+  puts "Please respond Yes or No."
+  user_response = gets.chomp
+  
+  while (user_response.downcase.match(/^[yes|no]+$/)) == nil do
+    puts "Your response was #{user_response}"
+    puts "Please answer Yes or No. No other response is accepted"    
+    puts user_response.downcase.chomp =~ /yes\b|no/ 
+  user_response = gets.chomp  
+  end
+  
+    # if user says "no" then we display students array 
+    # if user says "yes" then we need to ask for the letter 
+    
+return students if user_response.downcase == "no"
+    
+ puts "Which letter?" if user_response.downcase == "yes" 
+
+letter = gets.chomp
+
+while (letter.length != 1 || letter[/[a-z]|[A-Z]/] == nil) do 
+  puts "Only ONE letter of the ALPHABET is accepted "
+  puts "No other character is allowed "
+  letter = gets.chomp 
 end
+
+ students.select{ |x| x[:name][0].downcase == letter.downcase } 
+
+end 
+
 
 
 def print_header
@@ -25,10 +53,12 @@ end
 
 
 def print(students)
-  students.each_with_index do |student, index|
+  students.each_with_index do |student, index|    
     puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
   end
 end 
+
+
 
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
