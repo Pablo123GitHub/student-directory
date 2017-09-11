@@ -8,7 +8,7 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: :november} 
     puts "Now we have #{students.count} students"
     # get another name from the user
     name = gets.chomp
@@ -27,7 +27,7 @@ def input_students
     # if user says "no" then we display students array 
     # if user says "yes" then we need to ask for the letter 
     
-return students if user_response.downcase == "no"
+return students.reject{ |x| x[:name].length > 12} if user_response.downcase == "no"
     
  puts "Which letter?" if user_response.downcase == "yes" 
 
@@ -39,7 +39,8 @@ while (letter.length != 1 || letter[/[a-z]|[A-Z]/] == nil) do
   letter = gets.chomp 
 end
 
- students.select{ |x| x[:name][0].downcase == letter.downcase } 
+ students.select{ |x| x[:name][0].downcase == letter.downcase }
+ .reject{ |x| x[:name].length > 12}
 
 end 
 
