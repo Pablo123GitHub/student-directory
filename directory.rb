@@ -1,4 +1,9 @@
 def input_students
+  puts "For which cohort would you like to add more students?"
+    cohort = gets.chomp
+  cohort = "November" if cohort.empty? 
+    
+    
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create an empty array
@@ -8,11 +13,16 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: :november, hobbies: :coding, country: :UK, height: 1.75} 
+    students << {name: name, cohort: cohort, hobbies: :coding, country: :UK, height: 1.75} 
     puts "Now we have #{students.count} students"
     # get another name from the user
     name = gets.chomp
   end
+  
+
+  
+  
+  
   # Asking if they want to filter the names by the first letter 
   puts "Do you want to see the students with a name that starts with a specific letter?"
   puts "Please respond Yes or No."
