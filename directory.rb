@@ -8,7 +8,7 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: :november} 
+    students << {name: name, cohort: :november, hobbies: :coding, country: :UK, height: 1.75} 
     puts "Now we have #{students.count} students"
     # get another name from the user
     name = gets.chomp
@@ -60,7 +60,8 @@ def print(students)
   index = 0
   while countStudent >0          
        newIndex = "#{index}".to_i
-    puts "#{index+1}. #{students[newIndex][:name]} (#{students[newIndex][:cohort]} cohort)"       
+    puts "#{index+1}. #{students[newIndex][:name]} (#{students[newIndex][:cohort]} cohort)"   
+    puts "Hobbies : #{students[newIndex][:hobbies]}, height: #{students[newIndex][:height]}, from #{students[newIndex][:country]} "    
       countStudent = countStudent - 1 
       index = index + 1       
   end 
