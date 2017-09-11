@@ -53,9 +53,17 @@ end
 
 
 def print(students)
-  students.each_with_index do |student, index|    
-    puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
-  end
+  # students.each_with_index do |student, index|    
+  #   puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
+  # end
+  countStudent = students.length   
+  index = 0
+  while countStudent >0          
+       newIndex = "#{index}".to_i
+    puts "#{index+1}. #{students[newIndex][:name]} (#{students[newIndex][:cohort]} cohort)"       
+      countStudent = countStudent - 1 
+      index = index + 1       
+  end 
 end 
 
 
