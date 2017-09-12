@@ -42,7 +42,8 @@ while !name.empty?
     name = gets.delete!("\n")
   
   end
-
+  
+  if !students.empty? 
   # Asking if they want to filter the names by the first letter 
   puts "Do you want to see the students with a name that starts with a specific letter?"
   puts "Please respond Yes or No."
@@ -74,6 +75,9 @@ end
 # dipslay only students with the correct first letter + reject students with name > 12 characters
  students.select{ |x| x[:name][0].downcase == letter.downcase }
  .reject{ |x| x[:name].length > 12}
+ else 
+   return []
+ end 
 
 end 
 
@@ -127,14 +131,18 @@ end
 def print_footer(names)
   puts "Overall, we have #{names.count} great students" if names.count > 1
   puts "Overall, we have #{names.count} great student"  if names.count == 1
+  puts "NO STUDENT has been added to the list"  if names.count == 0
 end 
 
 students = input_students
 
-print_header
-print(students)
-print_footer(students)
 
+if students.count > 0
+print_header 
+print(students)
+end 
+
+print_footer(students)
 
 # students = [ 
 # ["Dr. Hannibal Lecter", :november],
