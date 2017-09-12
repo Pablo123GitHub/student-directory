@@ -29,7 +29,7 @@ end
 
 def show_students
   print_header
-  print 
+  print   
   print_footer(@students)
 end 
 
@@ -48,7 +48,7 @@ while !name.empty?
     puts "For which cohort ?"
     cohort = gets.delete!("\n") 
 # Checking if cohort is a valid month 
-    while (cohort.downcase.match(/(january|february|march|april|may|june|july|august|september|october|november|december)/)) == nil do
+while (cohort.downcase.match(/(\bjanuary\b|\bfebruary\b|\bmarch\b|\bapril\b|\bmay\b|\bjune\b|\bjuly\b|\baugust\b|\bseptember\b|\boctober\b|\bnovember\b|\bdecember\b)/)) == nil do
     # exiting loop if cohort is empty 
       puts "The default cohort will be November " if cohort.empty?
       break                                       if cohort.empty?
@@ -74,47 +74,10 @@ while !name.empty?
     puts "Please enter another student name "     
     puts "To finish, just hit return twice"       
     
-    name = gets.delete!("\n")
-  
+    name = gets.delete!("\n")  
   end
-  
-  if !@students.empty? 
-  # Asking if they want to filter the names by the first letter 
-  puts "Do you want to see the students with a name that starts with a specific letter?"
-  puts "Please respond Yes or No."
-  user_response = gets.delete!("\n")
-  
-  # checking the response provided by the user : must be yes or no. Anything else is not valid 
-  while (user_response.downcase.match(/^[yes|no]+$/)) == nil do
-    puts "Your response was #{user_response}"
-    puts "Please answer Yes or No. No other response is accepted"    
-    user_response = gets.delete!("\n")  
-  end
-  
-    # if user says "no" then we display students array: only students with less than 12 characters 
-return @students.reject{ |x| x[:name].length > 12} if user_response.downcase == "no"
-    
-  # if user says "yes" then we need to ask for the letter 
- puts "Which letter?" if user_response.downcase == "yes" 
 
-letter = gets.delete!("\n")
-
-# check whether the letter is a valid alphabet letter...nothing else 
-# Also we need to check if the input is only ONE letter 
-while (letter.length != 1 || letter[/[a-z]|[A-Z]/] == nil) do 
-  puts "Only ONE letter of the ALPHABET is accepted "
-  puts "No other character is allowed "
-  letter = gets.delete!("\n") 
-end
-
-# dipslay only students with the correct first letter + reject students with name > 12 characters
- return @students.select{ |x| x[:name][0].downcase == letter.downcase }
- .reject{ |x| x[:name].length > 12}
- else 
-   return []
- end 
-
-# return @students.reject{ |x| x[:name].length > 12} 
+ return @students.reject{ |x| x[:name].length > 12} 
  
 
 end 
@@ -128,29 +91,86 @@ end
 
 
 def print
-
   
-  newArr = @students.group_by {|x| x[:cohort]}
-  newArr.each do |cohort, arr|
-    countStudent = arr.length   
-    index = 0 
-    puts "**************************".center(50)   
-    puts "Cohort for #{cohort.upcase} ".center(50)
-    puts "**************************".center(50)
-    while countStudent >0                
-         newIndex = "#{index}".to_i
-      puts "#{index+1}. #{arr[newIndex][:name]}".center(50)
-      puts "(#{arr[newIndex][:cohort]} cohort)".center(60)  
-      puts "Hobbies : #{arr[newIndex][:hobbies]}, Height: #{arr[newIndex][:height]}, from #{arr[newIndex][:country]} ".center(60)    
-      puts " -----------------------------------------------------------"
-        countStudent = countStudent - 1 
-        index = index + 1       
-    end 
-  end
+    
+    if !@students.empty? 
+    # Asking if they want to filter the names by the first letter 
+    puts "Do you want to see the students with a name that starts with a specific letter?"
+    puts "Please respond Yes or No."
+    user_response = gets.delete!("\n")
+    
+    # checking the response provided by the user : must be yes or no. Anything else is not valid 
+    while (user_response.downcase.match(/^[yes|no]+$/)) == nil do
+      puts "Your response was #{user_response}"
+      puts "Please answer Yes or No. No other response is accepted"    
+      user_response = gets.delete!("\n")  
+    end    
+    
+      
+  # return @students.reject{ |x| x[:name].length > 12}
+  
+   if user_response.downcase == "no"
+     newArr = @students.group_by {|x| x[:cohort]}
+     newArr.each do |cohort, arr|
+       countStudent = arr.length   
+       index = 0 
+       puts "**************************".center(50)   
+       puts "Cohort for #{cohort.upcase} ".center(50)
+       puts "**************************".center(50)
+       while countStudent >0                
+            newIndex = "#{index}".to_i
+         puts "#{index+1}. #{arr[newIndex][:name]}".center(50)
+         puts "(#{arr[newIndex][:cohort]} cohort)".center(60)  
+         puts "Hobbies : #{arr[newIndex][:hobbies]}, Height: #{arr[newIndex][:height]}, from #{arr[newIndex][:country]} ".center(60)    
+         puts " -----------------------------------------------------------"
+           countStudent = countStudent - 1 
+           index = index + 1       
+       end 
+     end
+   elsif  user_response.downcase == "yes"
+     # if user says "yes" then we need to ask for the letter 
+    puts "Which letter?" if user_response.downcase == "yes" 
+   
+   letter = gets.delete!("\n")
+   
+   # check whether the letter is a valid alphabet letter...nothing else 
+   # Also we need to check if the input is only ONE letter 
+   while (letter.length != 1 || letter[/[a-z]|[A-Z]/] == nil) do 
+     puts "Only ONE letter of the ALPHABET is accepted "
+     puts "No other character is allowed "
+     letter = gets.delete!("\n") 
+   end
+     
+     newArr = @students
+     .select{ |x| x[:name][0].downcase == letter.downcase }
+     .reject{ |x| x[:name].length > 12}
+     .group_by {|x| x[:cohort]}
+     newArr.each do |cohort, arr|
+       countStudent = arr.length   
+       index = 0 
+       puts "**************************".center(50)   
+       puts "Cohort for #{cohort.upcase} ".center(50)
+       puts "**************************".center(50)
+       while countStudent >0                
+            newIndex = "#{index}".to_i
+         puts "#{index+1}. #{arr[newIndex][:name]}".center(50)
+         puts "(#{arr[newIndex][:cohort]} cohort)".center(60)  
+         puts "Hobbies : #{arr[newIndex][:hobbies]}, Height: #{arr[newIndex][:height]}, from #{arr[newIndex][:country]} ".center(60)    
+         puts " -----------------------------------------------------------"
+           countStudent = countStudent - 1 
+           index = index + 1    
+         end 
+       end 
+         else 
+           return []          
+       end 
+     end    
+
+  # dipslay only students with the correct first letter + reject students with name > 12 characters
+  #  return @students.select{ |x| x[:name][0].downcase == letter.downcase }
+  #  .reject{ |x| x[:name].length > 12}
   
 end 
-
-
 
 def print_footer(names)
   puts "Overall, we have #{names.count} great students" if names.count > 1
