@@ -32,7 +32,7 @@ end
 
 def show_students
   print_header
-  print   
+  print_students_list
   print_footer
 end 
 
@@ -93,7 +93,7 @@ def print_header
 end 
 
 
-def print
+def print_students_list
   
     
     if !@students.empty? 
