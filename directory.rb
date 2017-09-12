@@ -5,21 +5,24 @@ def interactive_menu
   loop do
     # 1. print the menu and ask the user what to do
     print_menu 
-    # 2. read the input and save it into a variable
-    selection = gets.chomp
+    # 2. read the input and save it into a variable  
     # 3. do what the user has asked
-    case selection
-    when "1"
-       input_students
-    when "2"
-    show_students
-    when "9"
-      exit # this will cause the program to terminate
-    else
-      puts "I don't know what you meant, try again"
-    end
+    process(gets.chomp) 
   end
 end
+
+def process(selection)
+  case selection
+  when "1"
+     input_students
+  when "2"
+  show_students
+  when "9"
+    exit # this will cause the program to terminate
+  else
+    puts "I don't know what you meant, try again"
+  end
+end 
 
 def print_menu
   puts "1. Input the students"
@@ -30,7 +33,7 @@ end
 def show_students
   print_header
   print   
-  print_footer(@students)
+  print_footer
 end 
 
 def input_students
@@ -172,10 +175,10 @@ def print
   
 end 
 
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students" if names.count > 1
-  puts "Overall, we have #{names.count} great student"  if names.count == 1
-  puts "NO STUDENT has been added to the list"  if names.count == 0
+def print_footer
+  puts "Overall, we have #{@students.count} great students" if @students.count > 1
+  puts "Overall, we have #{@students.count} great student"  if @students.count == 1
+  puts "NO STUDENT has been added to the list"  if @students.count == 0
 end 
 
 interactive_menu
