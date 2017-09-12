@@ -10,18 +10,18 @@ def input_students
   # while the name is not empty, repeat this code      
 while !name.empty?    
   # Prompting the user to enter a cohort 
-    puts "For which cohort would you like to add more students?"
+    puts "For which cohort ?"
     cohort = gets.chomp 
 # Checking if cohort is a valid month 
-    while (cohort.downcase.match(/(jan(uary)?|feb(ruary)?|mar(ch)?|apr(il)?|may|jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)/)) == nil do
+    while (cohort.downcase.match(/(january|february|march|april|may|june|july|august|september|october|november|december)/)) == nil do
     # exiting loop if cohort is empty 
       puts "The default cohort will be November " if cohort.empty?
       break                                       if cohort.empty?
     
     # If the user provides a cohort which is not a valid month, then we prompt the user to enter a cohort again
       puts "Your response was #{cohort}"
-      puts "It seems that there is a typo. Make sure that the month begins with a capital letter. "
-      puts "Feel free to abbreviate if need be. Example : Aug or August"
+      puts "It seems that there is a typo "
+      puts "Please write the month without abbreviation"
       puts "--------------------"
       puts "Please type cohort again"    
       cohort = gets.chomp  
@@ -106,9 +106,9 @@ def print(students)
   newArr.each do |cohort, arr|
     countStudent = arr.length   
     index = 0 
-    puts "**************************"   
-    puts "Here is the cohort for #{cohort.upcase} "
-    puts "**************************"
+    puts "**************************".center(50)   
+    puts "Cohort for #{cohort.upcase} ".center(50)
+    puts "**************************".center(50)
     while countStudent >0                
          newIndex = "#{index}".to_i
       puts "#{index+1}. #{arr[newIndex][:name]}".center(50)
