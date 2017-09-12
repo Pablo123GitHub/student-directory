@@ -5,13 +5,13 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  name = gets.chomp
+  name = gets.delete!("\n")
   
   # while the name is not empty, repeat this code      
 while !name.empty?    
   # Prompting the user to enter a cohort 
     puts "For which cohort ?"
-    cohort = gets.chomp 
+    cohort = gets.delete!("\n") 
 # Checking if cohort is a valid month 
     while (cohort.downcase.match(/(january|february|march|april|may|june|july|august|september|october|november|december)/)) == nil do
     # exiting loop if cohort is empty 
@@ -24,7 +24,7 @@ while !name.empty?
       puts "Please write the month without abbreviation"
       puts "--------------------"
       puts "Please type cohort again"    
-      cohort = gets.chomp  
+      cohort = gets.delete!("\n")  
     end
 
 # We exit the above loop when cohort is empty or when cohort has a valid month
@@ -39,20 +39,20 @@ while !name.empty?
     puts "Please enter another student name "     
     puts "To finish, just hit return twice"       
     
-    name = gets.chomp
+    name = gets.delete!("\n")
   
   end
 
   # Asking if they want to filter the names by the first letter 
   puts "Do you want to see the students with a name that starts with a specific letter?"
   puts "Please respond Yes or No."
-  user_response = gets.chomp
+  user_response = gets.delete!("\n")
   
   # checking the response provided by the user : must be yes or no. Anything else is not valid 
   while (user_response.downcase.match(/^[yes|no]+$/)) == nil do
     puts "Your response was #{user_response}"
     puts "Please answer Yes or No. No other response is accepted"    
-    user_response = gets.chomp  
+    user_response = gets.delete!("\n")  
   end
   
     # if user says "no" then we display students array: only students with less than 12 characters 
@@ -61,14 +61,14 @@ return students.reject{ |x| x[:name].length > 12} if user_response.downcase == "
   # if user says "yes" then we need to ask for the letter 
  puts "Which letter?" if user_response.downcase == "yes" 
 
-letter = gets.chomp
+letter = gets.delete!("\n")
 
 # check whether the letter is a valid alphabet letter...nothing else 
 # Also we need to check if the input is only ONE letter 
 while (letter.length != 1 || letter[/[a-z]|[A-Z]/] == nil) do 
   puts "Only ONE letter of the ALPHABET is accepted "
   puts "No other character is allowed "
-  letter = gets.chomp 
+  letter = gets.delete!("\n") 
 end
 
 # dipslay only students with the correct first letter + reject students with name > 12 characters
