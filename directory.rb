@@ -33,8 +33,8 @@ while !name.empty?
     
     # add the student hash to the array
     students << {name: name, cohort: cohort, hobbies: :coding, country: :UK, height: 1.75} 
-    puts "Now we have #{students.count} students"
-    
+    puts "Now we have #{students.count} students" if students.count > 1
+    puts "Now we have #{students.count} student" if students.count == 1
     # get another name from the user  
     puts "Please enter another student name "     
     puts "To finish, just hit return twice"       
@@ -125,7 +125,8 @@ end
 
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{names.count} great students" if names.count > 1
+  puts "Overall, we have #{names.count} great student"  if names.count == 1
 end 
 
 students = input_students
