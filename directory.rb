@@ -41,6 +41,9 @@ def show_students
   print_students_list
   print_footer
 end
+def add_students(name,cohort)
+    @students << {name: name, cohort: cohort, hobbies: :coding, country: :UK, height: 1.75}
+end
 
 def input_students
 
@@ -71,12 +74,13 @@ while (cohort.downcase.match(/(\bjanuary\b|\bfebruary\b|\bmarch\b|\bapril\b|\bma
       cohort = STDIN.gets.delete!("\n")
     end
 
+
 # We exit the above loop when cohort is empty or when cohort has a valid month
     cohort = cohort.capitalize.to_sym
     cohort = :November if cohort.empty?   # Turning cohort into a symbol
 
     # add the student hash to the array
-    @students << {name: name, cohort: cohort, hobbies: :coding, country: :UK, height: 1.75}
+    add_students(name,cohort)
     puts "Now we have #{@students.count} students" if @students.count > 1
     puts "Now we have #{@students.count} student" if @students.count == 1
     # get another name from the user
@@ -90,7 +94,6 @@ while (cohort.downcase.match(/(\bjanuary\b|\bfebruary\b|\bmarch\b|\bapril\b|\bma
 
 
 end
-
 
 
 def print_header
@@ -191,7 +194,7 @@ def save_students
   file = File.open("students.csv", "w")
 
   @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:hobbies], student[:height], student[:country]]
+    student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
@@ -201,9 +204,9 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort, hobbies, height, country = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, height: height, country: country}
-  end
+    name, cohort = line.chomp.split(',')
+    add_students(name,cohort)
+    end
   file.close
 end
 
