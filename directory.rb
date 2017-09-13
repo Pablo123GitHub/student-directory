@@ -11,7 +11,9 @@ def interactive_menu
   end
 end
 def you_have_selected(numInput)
-puts "YOU HAVE SELECTED OPTION #{numInput}"
+puts "*****************************************".center(50)
+puts "YOU HAVE SELECTED OPTION #{numInput}".center(50)
+puts  "*****************************************".center(50)
 end
 
 def process(selection)
