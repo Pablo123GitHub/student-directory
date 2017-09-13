@@ -25,7 +25,6 @@ def process(selection)
     you_have_selected(2)
   show_students
   when "3"
-    p ARGV
     you_have_selected(3)
     save_students
   when "4"
@@ -209,6 +208,8 @@ if File.exists?(user_response_file)
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+# IO.foreach(user_response_file) {|x| print x }
+
 else
   file = File.open("students.csv", "w")
   @students.each do |student|
@@ -216,6 +217,7 @@ else
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  # IO.foreach("students.csv") {|x| print x }
 end
 file.close
 end
@@ -230,24 +232,44 @@ if numberOption == 4
   puts "Your answer is empty, please type file again"
   user_response_file = gets.chomp
   end
+  # if File.exists?(user_response_file)
+  #   file = File.open(user_response_file, "r")
+  #   file.readlines.each do |line|
+  #     name, cohort = line.chomp.split(',')
+  #     add_students(name,cohort)
+  #   end
+  # end
   if File.exists?(user_response_file)
-    file = File.open(user_response_file, "r")
-    file.readlines.each do |line|
+    file = File.open(user_response_file).read
+    file.each_line do |line|
       name, cohort = line.chomp.split(',')
       add_students(name,cohort)
     end
   end
-else
+  # if File.exists?(user_response_file)
+  #   file = File.open(user_response_file, "r")
+  #   file.each {|line|
+  #     name, cohort = line.chomp.split(',') }
+  #       add_students(name,cohort)
+    else
+      if File.exists?("students.csv")
   puts "Students from file students.csv have been loaded!!"
-  if  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    add_students(name,cohort)
+  if  file = File.open("students.csv").read
+    file.each_line do |line|
+      name, cohort = line.chomp.split(',')
+      add_students(name,cohort)
     end
-  file.close
+    # file = File.open("students.csv", "r")
+    # file.each {|line|
+    #   name, cohort = line.chomp.split(',') }
+    #     add_students(name,cohort)
+  # end
+    end
 end
 end
-end
+end 
+
+
 
 def try_load_students
 filename = ARGV.first
