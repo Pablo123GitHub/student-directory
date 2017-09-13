@@ -25,11 +25,13 @@ def process(selection)
     you_have_selected(2)
   show_students
   when "3"
+    p ARGV
     you_have_selected(3)
     save_students
   when "4"
+    p ARGV
     you_have_selected(4)
-    load_students
+    load_students(4)
   when "9"
     you_have_selected(9)
     exit # this will cause the program to terminate
@@ -41,8 +43,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file. Default will be students.csv"
+  puts "4. Load the list from a file.  Default will be students.csv"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -192,6 +194,18 @@ def print_footer
 end
 
 def save_students
+
+puts "Which file would you like to use ?"
+user_response_file = gets.chomp
+
+while user_response_file.empty?
+puts "Your answer is empty, please type file again"
+user_response_file = gets.chomp
+end
+
+if File.exists?(user_response_file)
+  file = File.open(user_response_file, "w")
+else
   file = File.open("students.csv", "w")
 
   @students.each do |student|
@@ -201,14 +215,34 @@ def save_students
   end
   file.close
 end
+end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
+def load_students(filename = "students.csv", numberOption)
+
+if numberOption == 4
+  puts "Which file would you like to use ?"
+  user_response_file = gets.chomp
+
+  while user_response_file.empty?
+  puts "Your answer is empty, please type file again"
+  user_response_file = gets.chomp
+  end
+  if File.exists?(user_response_file)
+    file = File.open(user_response_file, "r")
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      add_students(name,cohort)
+    end
+  end
+else
+  if  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     add_students(name,cohort)
     end
   file.close
+end
+end
 end
 
 def try_load_students
@@ -222,6 +256,7 @@ else
   exit
 end
 end
+
 
 try_load_students
 interactive_menu
