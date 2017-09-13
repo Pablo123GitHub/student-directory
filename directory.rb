@@ -29,7 +29,6 @@ def process(selection)
     you_have_selected(3)
     save_students
   when "4"
-    p ARGV
     you_have_selected(4)
     load_students(4)
   when "9"
@@ -205,19 +204,23 @@ end
 
 if File.exists?(user_response_file)
   file = File.open(user_response_file, "w")
-else
-  file = File.open("students.csv", "w")
-
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-  file.close
+else
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
 end
+file.close
 end
 
-def load_students(filename = "students.csv", numberOption)
+def load_students(numberOption)
 
 if numberOption == 4
   puts "Which file would you like to use ?"
@@ -235,7 +238,8 @@ if numberOption == 4
     end
   end
 else
-  if  file = File.open(filename, "r")
+  puts "Students from file students.csv have been loaded!!"
+  if  file = File.open("students.csv", "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     add_students(name,cohort)
