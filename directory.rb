@@ -101,10 +101,13 @@ def print_header
   puts "--------------"
 end
 
+def header_students(cohort)
+  puts "**************************".center(50)
+  puts "Cohort for #{cohort.upcase} ".center(50)
+  puts "**************************".center(50)
+end
 
 def print_students_list
-
-
     if !@students.empty?
     # Asking if they want to filter the names by the first letter
     puts "Do you want to see the students with a name that starts with a specific letter?"
@@ -118,17 +121,13 @@ def print_students_list
       user_response = STDIN.gets.delete!("\n")
     end
 
-
-  # return @students.reject{ |x| x[:name].length > 12}
-
    if user_response.downcase == "no"
-     newArr = @students.group_by {|x| x[:cohort]}
+     newArr = @students.reject{ |x| x[:name].length > 12}
+     .group_by {|x| x[:cohort]}
      newArr.each do |cohort, arr|
        countStudent = arr.length
        index = 0
-       puts "**************************".center(50)
-       puts "Cohort for #{cohort.upcase} ".center(50)
-       puts "**************************".center(50)
+       header_students(cohort)
        while countStudent >0
             newIndex = "#{index}".to_i
          puts "#{index+1}. #{arr[newIndex][:name]}".center(50)
@@ -160,9 +159,7 @@ def print_students_list
      newArr.each do |cohort, arr|
        countStudent = arr.length
        index = 0
-       puts "**************************".center(50)
-       puts "Cohort for #{cohort.upcase} ".center(50)
-       puts "**************************".center(50)
+     header_students(cohort)
        while countStudent >0
             newIndex = "#{index}".to_i
          puts "#{index+1}. #{arr[newIndex][:name]}".center(50)
