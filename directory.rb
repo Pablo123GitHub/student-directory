@@ -7,7 +7,7 @@ def interactive_menu
     print_menu
     # 2. read the input and save it into a variable
     # 3. do what the user has asked
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -49,13 +49,13 @@ def input_students
   # # create an empty array
   # students = []
   # get the first name
-  name = gets.delete!("\n")
+  name = STDIN.gets.delete!("\n")
 
   # while the name is not empty, repeat this code
 while !name.empty?
   # Prompting the user to enter a cohort
     puts "For which cohort ?"
-    cohort = gets.delete!("\n")
+    cohort = STDIN.gets.delete!("\n")
 # Checking if cohort is a valid month
 while (cohort.downcase.match(/(\bjanuary\b|\bfebruary\b|\bmarch\b|\bapril\b|\bmay\b|\bjune\b|\bjuly\b|\baugust\b|\bseptember\b|\boctober\b|\bnovember\b|\bdecember\b)/)) == nil do
     # exiting loop if cohort is empty
@@ -68,7 +68,7 @@ while (cohort.downcase.match(/(\bjanuary\b|\bfebruary\b|\bmarch\b|\bapril\b|\bma
       puts "Please write the month without abbreviation"
       puts "--------------------"
       puts "Please type cohort again"
-      cohort = gets.delete!("\n")
+      cohort = STDIN.gets.delete!("\n")
     end
 
 # We exit the above loop when cohort is empty or when cohort has a valid month
@@ -83,7 +83,7 @@ while (cohort.downcase.match(/(\bjanuary\b|\bfebruary\b|\bmarch\b|\bapril\b|\bma
     puts "Please enter another student name "
     puts "To finish, just hit return twice"
 
-    name = gets.delete!("\n")
+    name = STDIN.gets.delete!("\n")
   end
 
  return @students.reject{ |x| x[:name].length > 12}
@@ -106,13 +106,13 @@ def print_students_list
     # Asking if they want to filter the names by the first letter
     puts "Do you want to see the students with a name that starts with a specific letter?"
     puts "Please respond Yes or No."
-    user_response = gets.delete!("\n")
+    user_response = STDIN.gets.delete!("\n")
 
     # checking the response provided by the user : must be yes or no. Anything else is not valid
     while (user_response.downcase.match(/^[yes|no]+$/)) == nil do
       puts "Your response was #{user_response}"
       puts "Please answer Yes or No. No other response is accepted"
-      user_response = gets.delete!("\n")
+      user_response = STDIN.gets.delete!("\n")
     end
 
 
@@ -140,14 +140,14 @@ def print_students_list
      # if user says "yes" then we need to ask for the letter
     puts "Which letter?" if user_response.downcase == "yes"
 
-   letter = gets.delete!("\n")
+   letter = STDIN.gets.delete!("\n")
 
    # check whether the letter is a valid alphabet letter...nothing else
    # Also we need to check if the input is only ONE letter
    while (letter.length != 1 || letter[/[a-z]|[A-Z]/] == nil) do
      puts "Only ONE letter of the ALPHABET is accepted "
      puts "No other character is allowed "
-     letter = gets.delete!("\n")
+     letter = STDIN.gets.delete!("\n")
    end
 
      newArr = @students
@@ -198,8 +198,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
@@ -207,6 +207,19 @@ def load_students
   file.close
 end
 
+def try_load_students
+filename = ARGV.first
+return if filename.nil?
+if File.exists?(filename)
+  load_students(filename)
+  puts "Loaded #{@students.count} from #{filename}"
+else
+  puts "Sorry, #{filename} doesn't exist"
+  exit
+end
+end
+
+try_load_students
 interactive_menu
 
 # students = input_students
