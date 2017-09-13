@@ -10,18 +10,26 @@ def interactive_menu
     process(STDIN.gets.chomp)
   end
 end
+def you_have_selected(numInput)
+puts "YOU HAVE SELECTED OPTION #{numInput}"
+end
 
 def process(selection)
   case selection
   when "1"
+    you_have_selected(1)
      input_students
   when "2"
+    you_have_selected(2)
   show_students
   when "3"
+    you_have_selected(3)
     save_students
   when "4"
+    you_have_selected(4)
     load_students
   when "9"
+    you_have_selected(9)
     exit # this will cause the program to terminate
   else
     puts "I don't know what you meant, try again"
