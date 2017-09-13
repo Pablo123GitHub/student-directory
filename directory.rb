@@ -45,15 +45,15 @@ def add_students(name,cohort)
     @students << {name: name, cohort: cohort, hobbies: :coding, country: :UK, height: 1.75}
 end
 
-def input_students
-
+def ask_for_another_user
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # # create an empty array
-  # students = []
+end
+
+def input_students
+  ask_for_another_user
   # get the first name
   name = STDIN.gets.delete!("\n")
-
   # while the name is not empty, repeat this code
 while !name.empty?
   # Prompting the user to enter a cohort
@@ -74,19 +74,17 @@ while (cohort.downcase.match(/(\bjanuary\b|\bfebruary\b|\bmarch\b|\bapril\b|\bma
       cohort = STDIN.gets.delete!("\n")
     end
 
-
 # We exit the above loop when cohort is empty or when cohort has a valid month
     cohort = cohort.capitalize.to_sym
     cohort = :November if cohort.empty?   # Turning cohort into a symbol
 
     # add the student hash to the array
     add_students(name,cohort)
+
     puts "Now we have #{@students.count} students" if @students.count > 1
     puts "Now we have #{@students.count} student" if @students.count == 1
     # get another name from the user
-    puts "Please enter another student name "
-    puts "To finish, just hit return twice"
-
+   ask_for_another_user
     name = STDIN.gets.delete!("\n")
   end
 
@@ -174,10 +172,6 @@ def print_students_list
            return []
        end
      end
-
-  # dipslay only students with the correct first letter + reject students with name > 12 characters
-  #  return @students.select{ |x| x[:name][0].downcase == letter.downcase }
-  #  .reject{ |x| x[:name].length > 12}
 
 end
 
