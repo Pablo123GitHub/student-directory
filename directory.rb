@@ -202,24 +202,23 @@ user_response_file = gets.chomp
 end
 
 if File.exists?(user_response_file)
-  file = File.open(user_response_file, "w")
+  File.open(user_response_file, 'w') do |file|
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-# IO.foreach(user_response_file) {|x| print x }
+end
 
 else
-  file = File.open("students.csv", "w")
+  File.open("students.csv", 'w') do |file|
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-  # IO.foreach("students.csv") {|x| print x }
+ end
 end
-file.close
 end
 
 def load_students(numberOption)
@@ -232,13 +231,7 @@ if numberOption == 4
   puts "Your answer is empty, please type file again"
   user_response_file = gets.chomp
   end
-  # if File.exists?(user_response_file)
-  #   file = File.open(user_response_file, "r")
-  #   file.readlines.each do |line|
-  #     name, cohort = line.chomp.split(',')
-  #     add_students(name,cohort)
-  #   end
-  # end
+
   if File.exists?(user_response_file)
     file = File.open(user_response_file).read
     file.each_line do |line|
@@ -246,11 +239,6 @@ if numberOption == 4
       add_students(name,cohort)
     end
   end
-  # if File.exists?(user_response_file)
-  #   file = File.open(user_response_file, "r")
-  #   file.each {|line|
-  #     name, cohort = line.chomp.split(',') }
-  #       add_students(name,cohort)
     else
       if File.exists?("students.csv")
   puts "Students from file students.csv have been loaded!!"
@@ -259,15 +247,10 @@ if numberOption == 4
       name, cohort = line.chomp.split(',')
       add_students(name,cohort)
     end
-    # file = File.open("students.csv", "r")
-    # file.each {|line|
-    #   name, cohort = line.chomp.split(',') }
-    #     add_students(name,cohort)
-  # end
     end
 end
 end
-end 
+end
 
 
 
