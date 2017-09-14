@@ -1,3 +1,5 @@
+require "csv"
+
 @students = [] # Empty array available for all methods
 
 def interactive_menu
@@ -210,6 +212,7 @@ if File.exists?(user_response_file)
   end
 end
 
+
 else
   File.open("students.csv", 'w') do |file|
   @students.each do |student|
@@ -233,21 +236,28 @@ if numberOption == 4
   end
 
   if File.exists?(user_response_file)
-    file = File.open(user_response_file).read
-    file.each_line do |line|
-      name, cohort = line.chomp.split(',')
-      add_students(name,cohort)
+  newCSVarr = CSV.read(user_response_file)
+    newCSVarr.each do |row|
+      name, cohort = row[0], row[1]
+    add_students(name,cohort)
     end
-  end
     else
       if File.exists?("students.csv")
-  puts "Students from file students.csv have been loaded!!"
-  if  file = File.open("students.csv").read
-    file.each_line do |line|
-      name, cohort = line.chomp.split(',')
+    newCSVarr = CSV.read("students.csv")
+      newCSVarr.each do |row|
+        name, cohort = row[0], row[1]
       add_students(name,cohort)
+      end
     end
-    end
+end
+else
+  if File.exists?("students.csv")
+newCSVarr = CSV.read("students.csv")
+  newCSVarr.each do |row|
+    name, cohort = row[0], row[1]
+  add_students(name,cohort)
+  end
+  puts "DEFAULT STUDENTS.CSV FILE LOADED "
 end
 end
 end
